@@ -1,0 +1,59 @@
+
+ul{
+  list-style: none;
+}
+.naviBtn{
+  width:80px;
+  height:30px;
+  color:#60C0FF;
+  text-shadow: 0 2 2 rgba(0,0,0,50),
+                1 1 0 #1ECDF7,
+                -1 -1 0 #1ECDF7;
+}
+h1{
+  font-family: "Noto Sans JP";
+  color:#494949;
+}
+#errormessage{
+  color:red;
+}
+
+.search{
+  width:120px;
+  border-radius: 5px;
+  height:30px;
+}
+
+.searchbtn{
+  width:60px;
+  height:30px;
+  border-radius: 5px;
+}
+.hide{
+  display: none;
+}
+@media screen and (min-width:600px){
+  .container{
+    width:80%;
+    margin-left: auto;
+    margin-right:auto;
+  }
+  li>a{
+    float:left;
+  }
+  li{
+    margin-bottom: 5px;
+    margin-top:5px;
+
+    height:90px;
+    clear:both;
+  }
+}
+@media screen and (max-width:599px){
+
+   li{
+     padding-bottom: 5px;
+     padding-top:5px;
+     border-bottom:solid 1px #f7f7f7;
+   }
+}
