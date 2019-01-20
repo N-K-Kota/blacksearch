@@ -26,28 +26,28 @@ function getSearchResult(json){
   for(var i=0;i<items.length;i++){
     idList.push(items[i].id);
   }
+  console.log(idList);
 }
 
-function writeDataList(){
+function writeDataList(i){
     let apiObj;
     let d;
     switch(type){
       case 0:
-       apiObj = new Video(idList[index].videoId);
+       apiObj = new Video(idList[i].videoId);
        d = apiObj.getLike();
       break;
       case 1:
-      apiObj = new Video(idList[index].videoId);
+      apiObj = new Video(idList[i].videoId);
       d = apiObj.getDis();
        break;
       case 2:
-      apiObj = new Video(idList[index].videoId);
+      apiObj = new Video(idList[i].videoId);
       d = apiObj.getCount();
        break;
       default:
       break;
     }
-     index += 1;
       return d;
 }
 
@@ -89,13 +89,13 @@ function makeLi(){
   nextBtn2.classList.remove("hide");
 }
 
-async function searchMethod(promise){
+async function searchMethod(search){
   if(!loading){
     loading = true;
     gif.classList.remove("hide");
   var n = true;
   while(n==true){
-  await promise.then((data)=>{
+  await search.getJson(nextToken).then((data)=>{
     getSearchResult(data);
   }).catch((error)=>{
     console.log(error.message);
@@ -104,16 +104,16 @@ async function searchMethod(promise){
   });
 
   for(var i=0;i<idList.length;i++){
-    await writeDataList().then((data)=>{
+    await writeDataList(i).then((data)=>{
       switch(type){
         case 0:
         if((data.viewCount<MaxG)&&(data.viewCount>0)){
-        dataList.push(data)
+        dataList.push(data);
        }
         break;
         case 1:
         if((data.viewCount<MaxB)&&(data.viewCount>0)){
-        dataList.push(data)
+        dataList.push(data);
        }
         break;
         case 2:
@@ -135,7 +135,6 @@ async function searchMethod(promise){
     n=false;
   }
   idList = [];
-  index = 0;
 } //While終了
   dataList.sort(function(a,b){
     if(a.viewCount>=b.viewCount){
@@ -164,34 +163,24 @@ sBtn.addEventListener("click",function(){
     nextToken = "";
     prevToken = "";
     let select = document.querySelector("select");
-    let index = select.selectedIndex;
-    type = index;
+    type = select.selectedIndex;
     let search = new Search(text.value,"video");
-    let promise = search.getJson(nextToken)
-    searchMethod(promise);
+    searchMethod(search);
 }
 });
 
-function setDatas(){
-  for(var i = 0;i<dataList.length;i++){
-    sessionStorage.setItem(`data${i}`,JSON.stringfy(dataList[i]));
-  }
-}
+
 nextBtn.addEventListener("click",function(){
   if(text.value){
   reset();
-  let search;
-  search = new Search(text.value,"video");
-  let promise = search.getJson(nextToken);
-  searchMethod(promise);
+  let search = new Search(text.value,"video");
+  searchMethod(search);
 }
 });
 nextBtn2.addEventListener("click",function(){
   if(text.value){
   reset();
-  let search;
-  search = new Search(text.value,"video");
-  let promise = search.getJson(nextToken);
-  searchMethod(promise);
+  let search = new Search(text.value,"video");
+  searchMethod(search);
 }
 });
