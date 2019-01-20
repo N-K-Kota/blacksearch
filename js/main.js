@@ -29,8 +29,6 @@ function getSearchResult(json){
 }
 
 function writeDataList(){
-
-  return new Promise((resolve,reject)=>{
     let apiObj;
     let d;
     switch(type){
@@ -49,27 +47,10 @@ function writeDataList(){
       default:
       break;
     }
-    if(d instanceof Error){
-      reject(d);
-    }else{
-      resolve(d);
-    }
-    index += 1;
-  });
-
+     index += 1;
+      return d;
 }
-/*function pullData(){
-  let apiObj;
-  if(type==1){
-    apiObj = new Video(idList[index].videoId);
-  }else{
-    apiObj = new Channel(idList[index].channelId);
-  }
-  let d = apiObj.getCount();
-  if(d.viewCount<MaxC){
-    dataList.pushu(d);
-  }
-}*/
+
 function makeLi(){
   for(var i=0;i<dataList.length;i++){
     let li = document.createElement("li");
@@ -179,17 +160,14 @@ function reset(){
 }
 sBtn.addEventListener("click",function(){
   if(text.value){
-reset();
-nextToken = "";
-prevToken = "";
-  let select = document.querySelector("select");
-  let index = select.selectedIndex;
-  type = index;
-  let search = new Search(text.value,"video");
-  let promise = ()=>{
-  return new Promise((resolve,reject)=>{
-      resolve(search.getJson(nextToken));
-  });
+    reset();
+    nextToken = "";
+    prevToken = "";
+    let select = document.querySelector("select");
+    let index = select.selectedIndex;
+    type = index;
+    let search = new Search(text.value,"video");
+    let promise = search.getJson(nextToken)
 };
   searchMethod(promise);
 }
@@ -205,17 +183,7 @@ nextBtn.addEventListener("click",function(){
   reset();
   let search;
   search = new Search(text.value,"video");
-  let promise = ()=>{
-  return new Promise((resolve,reject)=>{
-      let d = search.getJson(nextToken);
-      if(d.name == "TypeError"){
-        reject(d);
-      }else{
-        resolve(search.getJson(nextToken));
-      }
-
-  });
-};
+  let promise = search.getJson(nextToken);
   searchMethod(promise);
 }
 });
@@ -224,17 +192,7 @@ nextBtn2.addEventListener("click",function(){
   reset();
   let search;
   search = new Search(text.value,"video");
-  let promise = ()=>{
-  return new Promise((resolve,reject)=>{
-      let d = search.getJson(nextToken);
-      if(d.name == "TypeError"){
-        reject(d);
-      }else{
-        resolve(search.getJson(nextToken));
-      }
-
-  });
-};
+  let promise = search.getJson(nextToken);
   searchMethod(promise);
 }
 });
