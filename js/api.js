@@ -26,7 +26,7 @@ class Video{
     }).catch(function(error){
      reject(error);
    });
-   })
+ });
  }
   getDis(){
     let option = `videos?part=statistics,snippet&id=${this.id}`;
@@ -58,7 +58,7 @@ class Video{
   }).catch(function(error){
      reject(error);
   });
-  })
+});
  }
   getLike(){
     let option = `videos?part=statistics,snippet&id=${this.id}`;
@@ -90,6 +90,7 @@ class Video{
       }).catch(function(error){
         reject(error);
       });
+    });
   }
 }
 class Search{
@@ -117,7 +118,7 @@ class Search{
        }).catch(function(error){
          reject(error);
        });
-     })
+     });
     }
 }
 class Data{

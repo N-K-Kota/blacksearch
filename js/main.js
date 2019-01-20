@@ -95,7 +95,7 @@ async function searchMethod(promise){
     gif.classList.remove("hide");
   var n = true;
   while(n==true){
-  await promise().then((data)=>{
+  await promise.then((data)=>{
     getSearchResult(data);
   }).catch((error)=>{
     console.log(error.message);
@@ -168,8 +168,7 @@ sBtn.addEventListener("click",function(){
     type = index;
     let search = new Search(text.value,"video");
     let promise = search.getJson(nextToken)
-};
-  searchMethod(promise);
+    searchMethod(promise);
 }
 });
 
