@@ -26,7 +26,6 @@ function getSearchResult(json){
   for(var i=0;i<items.length;i++){
     idList.push(items[i].id);
   }
-  console.log(idList);
 }
 
 function writeDataList(i){
